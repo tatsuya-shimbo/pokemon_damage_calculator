@@ -1,24 +1,451 @@
 <div class="wrapper">
-  <div id="right-poke" class="poke">
+  <div id=" left-poke" class="poke">
     <div class="poke-title">
-      <div class="kougeki">攻撃</div>
+      <div class="kougeki form-title">攻撃</div>
       <div class="poke-btns">
         <div class="btn btn-pre">保存</div>
         <div class="btn btn-use">呼出</div>
       </div>
     </div>
     <div class="poke-form">
-   </div>
+      <div class="poke-name form-box">
+        <div class="poke-name-label form-label">
+          <div class="label-left">ポケモン</div>
+          <div class="label-right">
+            <%= attack_pokemon.hit_point %>-<span class="group-color-a"><%= attack_pokemon.attack %></span>-<%= attack_pokemon.block %>-<span class="group-color-c"><%= attack_pokemon.contact %></span>-<%= attack_pokemon.defense %>-<%= attack_pokemon.speed %>
+          </div>
+        </div>
+        <% if attack_pokemon? %>
+          <div class="poke-name-main form-main"><%= attack_pokemon.name %></div>
+          <div class="convey convey-attack-a"><%= attack_pokemon.attack %></div>
+          <div class="convey convey-attack-c"><%= attack_pokemon.contact %></div>
+          <div class="convey convey-attack-category1"><%= attack_pokemon.category_1 %></div>
+          <div class="convey convey-attack-category2"><%= attack_pokemon.category_2 %></div>
+          <div class="convey convey-compatibility"></div>
+        <% else %>
+          <div class="poke-name-main form-main">-</div>
+        <% end %>
+      </div>
+      <div class="modal-wrapper">
+        <div class="modal">
+          <div class="btn-close"><i class="fas fa-times"></i></div>
+          <div class="modal-form">
+            <%= form_with(url: attack_poke_sessions_path, scope: :session, local: true, id: "form-attack") do |f| %>
+              <%= f.text_field :attack_name, class: "search-form" %>
+            <% end %>
+          </div>
+          <ul class="modal-select">
+          </ul>
+        </div>
+      </div>
+      <div class="poke-attack-up form-box">
+        <div class="poke-effort box-left">
+           <div class="poke-effort-label form-label">努力値 (<span class="attack-group group-color">攻撃</span>)</div>
+          <div class="poke-effort-main form-main">
+           <input type="text" name="effort-attack" value=252 class="input-number" id="effort-attack">
+          </div>
+        </div>
+        <div class="poke-individual box-right">
+          <div class="poke-individual-label form-label">個体値 (<span class="attack-group group-color">攻撃</span>)</div>
+          <div class="poke-individual-main form-main">
+            <input type="text" name="individual" value=31 class="input-number" id= "individual" autocomplete="off">
+          </div>
+        </div>
+      </div>
+      <div class="poke-attack-down form-box">
+        <div class="poke-correction box-left parent-dropdown">
+          <div class="poke-correction-label form-label">性格補正 (<span class="attack-group group-color">攻撃</span>)</div>
+          <div class="poke-correction-main form-main">
+            <select name="correction-attack" class="input-select" id="correction-attack">
+              <option value="1.1" hidden>×1.1</option>
+              <option value="1" selected hidden>×1.0</option>
+              <option value="0.9" hidden>×0.9</option>
+            </select>
+            <i class="fas fa-sort-down dropdown-icon"></i>
+          </div>
+          <div class="correction-dropdown dropdown">
+
+          </div>
+        </div>
+        <div class="poke-real box-right">
+          <div class="poke-real-label form-label">
+            実数値 (<span class="attack-group group-color">攻撃</span>)
+          </div>
+          <div class="poke-real-main real-attack form-main">-</div>
+        </div>
+      </div>
+      <div class="poke-rank form-box parent-dropdown">
+        <div class="poke-rank-label form-label"><span class="attack-group group-color">攻撃</span>ランク</div>
+        <div class="poke-rank-main form-main">
+          <select class="input-select" name="rank-attack" id="rank-attack">
+            <option value="4.0" hidden>+6</option>
+            <option value="3.5" hidden>+5</option>
+            <option value="3.0" hidden>+4</option>
+            <option value="2.5" hidden>+3</option>
+            <option value="2.0" hidden>+2</option>
+            <option value="1.5" hidden>+1</option>
+            <option value="1" selected hidden>-</option>
+            <option value="0.66666" hidden>-1</option>
+            <option value="0.5" hidden>-2</option>
+            <option value="0.4" hidden>-3</option>
+            <option value="0.33333" hidden>-4</option>
+            <option value="0.28571" hidden>-5</option>
+            <option value="0.25" hidden>-6</option>
+          </select>
+          <i class="fas fa-sort-down dropdown-icon"></i>
+        </div>
+        <div class="rank-dropdown dropdown">
+
+        </div>
+      </div>
+      <div class="poke-item form-box parent-dropdown">
+        <div class="poke-item-label form-label">持ち物</div>
+        <div class="poke-item-main form-main">
+          <select class="input-select" name="item-attack" id="item-attack">
+            <option value="0" data-value="4096" selected hidden></option>
+            <option value="1" data-value="6144" hidden>こだわりハチマキ</option>
+            <option value="2" data-value="6144" hidden>こだわりメガネ</option>
+            <option value="3" data-value="5324" hidden>いのちのたま</option>
+            <option value="4" data-value="5325" hidden>ノーマルジュエル</option>
+            <option value="5" data-value="4915" hidden>たつじんのおび</option>
+            <option value="6" data-value="4915" hidden>タイプ強化系</option>
+            <option value="7" data-value="4505" hidden>ちからのハチマキ</option>
+            <option value="8" data-value="4505" hidden>ものしりメガネ</option>
+          </select>
+          <i class="fas fa-sort-down dropdown-icon"></i>
+        </div>
+        <div class="item-dropdown dropdown">
+
+        </div>
+      </div>
+      <div class="poke-skill form-box parent-dropdown">
+        <div class="poke-skill-label form-label">
+          <div class=" label-left">技</div>
+          <div class="label-right skill-parameter">
+
+          </div>
+        </div>
+        <div class="poke-skill-main form-main">
+          <select class="input-select" id="skill" name="skill">
+            <option value="0" data-category="0" data-group="0" data-power="0" selected hidden></option>
+            <% skills = attack_pokemon.able.order(:id) %>
+            <% skills.each do |skill| %>
+              <option value="<%= skill.id %>" data-category="<%= skill.category %>" data-group="<%= skill.group
+                %>" data-power="<%= skill.power%>" hidden><%= skill.name %></option>
+            <% end %>
+          </select>
+          <i class="fas fa-sort-down dropdown-icon"></i>
+        </div>
+        <div class="skill-dropdown dropdown">
+
+        </div>
+      </div>
+      <div class="poke-characteristic form-box parent-dropdown">
+        <div class="poke-characteristic-label form-label">特性</div>
+        <div class="poke-characteristic-main form-main">
+          <select class="input-select" id="characteristic-attack" name="chracteristic-attack">
+            <option value="0" hidden></option>
+            <% characteristics = attack_pokemon.have %>
+            <% characteristics.each do |chara| %>
+              <option value="<%= chara.id %>" hidden><%= chara.name %></option>
+            <% end %>
+          </select>
+          <i class="fas fa-sort-down dropdown-icon"></i>
+        </div>
+        <div class="characteristic-dropdown dropdown">
+
+        </div>
+      </div>
+    </div>
   </div>
   <div id="center">
-  　
+    <div id="condition" class="center-box">
+      <div class="poke-title">
+        <div class="form-title">条件</div>
+        <div class="btn-box">
+          <%= link_to change_poke_sessions_path, method: :post do %>
+          <div class="btn-change-box">
+            <i class="fas fa-exchange-alt" id="btn-change"></i>
+          </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="poke-form">
+        <div class="condition-left">
+          <div class="format form-box parent-dropdown">
+            <div class="format-label form-label">対戦形式</div>
+            <div class="format-main form-main ">
+              <select class="input-select" id="format" name="format">
+                <option value="0" hidden>シングルバトル</option>
+                <option value="1" hidden>ダブルバトル</option>
+              </select>
+              <i class="fas fa-sort-down dropdown-icon"></i>
+            </div>
+            <div class="format-dropdown dropdown">
+
+            </div>
+          </div>
+          <div class="weather form-box parent-dropdown">
+            <div class="weather-label form-label">天候</div>
+            <div class="weather-main form-main ">
+              <select class="input-select" id="weather" name="weather">
+                <option value="0" hidden></option>
+                <option value="1" hidden>にほんばれ</option>
+                <option value="2" hidden>あめ</option>
+                <option value="3" hidden>あられ</option>
+                <option value="4" hidden>すなあらし</option>
+              </select>
+              <i class="fas fa-sort-down dropdown-icon"></i>
+            </div>
+            <div class="weather-dropdown dropdown">
+
+            </div>
+          </div>
+          <div class="field form-box parent-dropdown">
+            <div class="field-label form-label">フィールド</div>
+            <div class="field-main form-main ">
+              <select class="input-select" id="field" name="field">
+                <option value="0" hidden></option>
+                <option value="1" hidden>エレキフィールド</option>
+                <option value="2" hidden>グラスフィールド</option>
+                <option value="3" hidden>ミストフィールド</option>
+                <option value="4" hidden>サイコフィールド</option>
+              </select>
+              <i class="fas fa-sort-down dropdown-icon"></i>
+            </div>
+            <div class="field-dropdown dropdown">
+
+            </div>
+          </div>
+        </div>
+        <div class="condition-right">
+          <div class="">
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="result" class="center-box">
+      <div class="poke-title">
+        <div class="form-title">結果</div>
+      </div>
+      <div class="poke-form">
+        <div class="result-nomal form-box">
+          <div class="result-nomal-label form-label">通常</div>
+          <div class="result-main form-main">
+            <div class="result-damage ">
+              <div class="damage-left">
+                <div class="damage-box">
+                  ダメージ： <span class="damage"></span>
+                </div>
+                <div class="percentage-box">
+                  割合： <span class="percentage"></span>
+                </div>
+              </div>
+              <div class="damage-right">
+                <div class="confirm-box">
+                  確定： <span class="confirm"></span>
+                </div>
+                <div class="random-box">
+                  乱数： <span class="random"></span>
+                </div>
+              </div>
+            </div>
+            <div class="result-nomal-graph">
+              <div class="nomal-graph graph">
+                <div class="graph-confirm"></div>
+                <div class="graph-random"></div>
+              </div>
+            </div>
+            <div class="result-nomal-detail">
+              <div class="detail-main nomal-detail">
+                <div class="detail-left"></div><div class="detail-right"></div>
+              </div>
+              <div class="detail-icon">
+                <i class="fas fa-sort-down dropdown-icon"></i><br>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="result-critical form-box">
+          <div class="result-critical-label form-label">急所</div>
+          <div class="result-main form-main">
+            <div class="result-damage">
+              <div class="damage-left">
+                <div class="damage-box">
+                  ダメージ： <span class="damage"></span>
+                </div>
+                <div class="percentage-box">
+                  割合： <span class="percentage"></span>
+                </div>
+              </div>
+              <div class="damage-right">
+                <div class="confirm-box">
+                  確定： <span class="confirm"></span>
+                </div>
+                <div class="random-box">
+                  乱数： <span class="random"></span>
+                </div>
+              </div>
+            </div>
+            <div class="result-critical-graph">
+              <div class="critical-graph graph">
+                <div class="graph-confirm"></div>
+                <div class="graph-random"></div>
+              </div>
+            </div>
+            <div class="result-critical-detail">
+              <div class="detail-main critical-detail">
+                <div class="detail-left"></div><div class="detail-right"></div>
+              </div>
+              <div class="detail-icon">
+                <i class="fas fa-sort-down dropdown-icon"></i><br>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
-  <div id="left-poke" class="poke">
+  <div id="right-poke" class="poke">
     <div class="poke-title">
-      <div class="bougyo">防御</div>
+      <div class="bougyo form-title">防御</div>
       <div class="poke-btns">
         <div class="btn btn-pre">保存</div>
         <div class="btn btn-use">呼出</div>
+      </div>
+    </div>
+    <div class="poke-form">
+      <div class="poke-name form-box">
+        <div class="poke-name-label form-label">
+          <div class="label-left">ポケモン</div>
+          <div class="label-right">
+            <%= block_pokemon.hit_point %>-<%= block_pokemon.attack %>-<span class="group-color-a"><%= block_pokemon.block %></span>-<%= block_pokemon.contact %>-<span class="group-color-c"><%= block_pokemon.defense %></span>-<%= block_pokemon.speed %>
+          </div>
+        </div>
+        <% if block_pokemon? %>
+          <div class="poke-name-main form-main"><%= block_pokemon.name %></div>
+          <div class="convey convey-block-h"><%= block_pokemon.hit_point %></div>
+          <div class="convey convey-block-b"><%= block_pokemon.block %></div>
+          <div class="convey convey-block-d"><%= block_pokemon.defense %></div>
+          <div class="convey convey-block-category1"><%= block_pokemon.category_1 %></div>
+          <div class="convey convey-block-category2"><%= block_pokemon.category_2 %></div>
+        <% else %>
+          <div class="poke-name-main form-main">-</div>
+        <% end %>
+      </div>
+      <div class="modal-wrapper">
+        <div class="modal">
+          <div class="btn-close"><i class="fas fa-times"></i></div>
+          <div class="modal-form">
+            <%= form_with(url: block_poke_sessions_path, scope: :session, local: true, id: "form-block") do |f| %>
+              <%= f.text_field :block_name, class: "search-form" %>
+            <% end %>
+          </div>
+          <ul class="modal-select">
+          </ul>
+        </div>
+      </div>
+      <div class="form-box">
+        <div class="poke-effort box-left">
+          <div class="poke-effort-label form-label">努力値 (HP)</div>
+          <div class="poke-effort-main form-main">
+            <input type="text" name="effort-attack" value=252 class="input-number" id="effort-hp">
+          </div>
+        </div>
+        <div class="poke-real box-right">
+          <div class="poke-real-label form-label">
+            実数値 (HP)
+          </div>
+          <div class="poke-real-main real-hp form-main">-</div>
+        </div>
+      </div>
+      <div class="poke-block-up form-box">
+        <div class="poke-effort box-left">
+           <div class="poke-effort-label form-label">努力値 (<span class="block-group group-color">防御</span>)</div>
+           <div class="poke-effort-main form-main">
+             <input type="text" name="effort-block" value=252 class="input-number" id="effort-block">
+           </div>
+        </div>
+        <div class="poke-rank box-right parent-dropdown">
+          <div class="poke-rank-label form-label"><span class="block-group group-color">防御</span>ランク</div>
+          <div class="poke-rank-main form-main">
+            <select class="input-select" name="rank-block" id="rank-block">
+              <option value="4.0" hidden>+6</option>
+              <option value="3.5" hidden>+5</option>
+              <option value="3.0" hidden>+4</option>
+              <option value="2.5" hidden>+3</option>
+              <option value="2.0" hidden>+2</option>
+              <option value="1.5" hidden>+1</option>
+              <option value="1" selected hidden>-</option>
+              <option value="0.66666" hidden>-1</option>
+              <option value="0.5" hidden>-2</option>
+              <option value="0.4" hidden>-3</option>
+              <option value="0.33333" hidden>-4</option>
+              <option value="0.28571" hidden>-5</option>
+              <option value="0.25" hidden>-6</option>
+            </select>
+            <i class="fas fa-sort-down dropdown-icon"></i>
+          </div>
+          <div class="rank-dropdown dropdown">
+
+          </div>
+        </div>
+      </div>
+      <div class="poke-block-down form-box">
+        <div class="poke-correction box-left parent-dropdown">
+          <div class="poke-correction-label form-label">性格補正 (<span class="block-group group-color">防御</span>)</div>
+          <div class="poke-correction-main form-main">
+            <select name="correction-block" class="input-select" id="correction-block">
+              <option value="1.1" hidden>×1.1</option>
+              <option value="1" selected hidden>×1.0</option>
+              <option value="0.9" hidden>×0.9</option>
+            </select>
+            <i class="fas fa-sort-down dropdown-icon"></i>
+          </div>
+          <div class="correction-dropdown dropdown">
+
+          </div>
+        </div>
+        <div class="poke-real box-right">
+          <div class="poke-real-label form-label">
+            実数値 (<span class="block-group group-color">防御</span>)
+          </div>
+          <div class="poke-real-main real-block form-main">-</div>
+        </div>
+      </div>
+      <div class="poke-item form-box parent-dropdown">
+        <div class="poke-item-label form-label">持ち物</div>
+        <div class="poke-item-main form-main">
+          <select class="input-select" name="item-block" id="item-block">
+            <option value="0" data-value="1" selected hidden></option>
+            <option value="1" data-value="1.5" hidden>しんかのきせき</option>
+            <option value="2" data-value="1.5" hidden>とつげきチョッキ</option>
+            <option value="3" data-value="2.0" hidden>半減きのみ</option>
+          </select>
+          <i class="fas fa-sort-down dropdown-icon"></i>
+        </div>
+        <div class="item-dropdown dropdown">
+
+        </div>
+      </div>
+      <div class="poke-characteristic form-box parent-dropdown">
+        <div class="poke-characteristic-label form-label">特性</div>
+        <div class="poke-characteristic-main form-main">
+          <select class="input-select" id="characteristic-block" name="chracteristic-block">
+            <option value="0" hidden></option>
+            <% characteristics = block_pokemon.have %>
+            <% characteristics.each do |chara| %>
+              <option value="<%= chara.id %>" hidden><%= chara.name %></option>
+            <% end %>
+          </select>
+          <i class="fas fa-sort-down dropdown-icon"></i>
+        </div>
+        <div class="characteristic-dropdown dropdown">
+
+        </div>
       </div>
     </div>
   </div>

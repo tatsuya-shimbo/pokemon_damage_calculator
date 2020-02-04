@@ -1,6 +1,17 @@
-<%= form_with(model: , local: true) do |f| %>
+<%= form_with(model: @user, local: true) do |f| %>
   <div class="poke-name">
     <%= f.label :name %>
     <%= f.select :name %>
   </div>
 <% end %>
+
+<%= f.label :attack_id, "ポケモン" %>
+<%= f.collection_select(:attack_id, @pokemon, :id, :name, :prompt => "選択してください") %>
+
+<%= form_with(url: attack_poke_sessions_path, scope: :session, local: true, id: "form-attack") do |f| %>
+<%= f.text_field :attack_name %>
+<% end %>
+
+$("#session_attack_name").change(function(){
+  $("#form-attack").submit();
+});

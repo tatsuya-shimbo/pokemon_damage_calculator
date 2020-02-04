@@ -3,6 +3,8 @@
 body {
   height: 1000px;
   margin: 0;
+  font-family: serif;
+  color: #555555;
   background: -moz-linear-gradient(top, #FFF, #d4ecff);
   background: -webkit-linear-gradient(top, #FFF, #d4ecff);
   background: linear-gradient(to bottom right, #FFF, #d4ecff);
@@ -10,10 +12,11 @@ body {
 
 a {
   text-decoration: none;
+  color: #555555;
 }
 
 .container {
-  padding: 85px 60px 60px;
+  padding: 85px 3.8% 0 3.8%;
 }
 
 .btn {
@@ -29,6 +32,43 @@ a {
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0);
 }
 
+select::-ms-expand {
+	display: none;
+}
+
+select {
+  -webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+  border-radius: 0;
+  border: 0;
+  font-size: 20px;
+  font-family: serif;
+  color: #555555;
+	background-color: #ffffff;
+  cursor: pointer;
+}
+
+select:focus {
+  outline: none;
+}
+
+.convey {
+  display: none;
+}
+
+.group-color {
+  color: #1da37b;
+}
+
+.group-color-a {
+  color: #1da37b;
+}
+
+.group-color-c {
+  color: #555555;
+}
+
 /* 1000px以上 */
 
 @media (min-width: 1000px ) {
@@ -42,10 +82,13 @@ a {
     top: 0;
     box-shadow: 0px 0px 6px rgba(0,0,0,0.3);
     cursor: default;
+    box-sizing: border-box;
   }
 
   .header-left {
     width: 50%;
+    position: relative;
+    top: -4px;
     display: inline-block;
   }
 
@@ -58,8 +101,8 @@ a {
   }
 
   .btn-header {
-    height: 50px;
-    padding: 10px 20px 0;
+    height: auto;
+    padding: 20px 20px 11px;
     display: inline-block;
     font-size: 22px;
     background-color: rgba(0,0,0,0);
@@ -72,13 +115,17 @@ a {
   }
 
   .login{
-    margin-left: 50px;
+    position: relative;
+    top: -4px;
   }
 
   .btn-menu {
     padding-top: 14px;
+    padding-bottom: 0;
     height: 46px;
     margin-right: 50px;
+    position: relative;
+    top: -6px;
   }
 
   .btn-header:hover {
@@ -88,8 +135,8 @@ a {
   /* wrapper */
 
   .poke {
-    width: 23%;
-    height: 700px;
+    width: 23.5%;
+    height: 662px;
     padding: 10px;
     vertical-align: top;
     background-color: #ffffff;
@@ -101,17 +148,29 @@ a {
   }
 
   #center {
-    width: 48%;
-    height: 700px;
+    width: 47.7%;
+    height: auto;
     margin-left: 2%;
     margin-right: 2%;
     vertical-align: top;
-    background-color: #ffffff;
-    border: solid 1px #dddddd;
-    border-radius: 5px;
-    box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
     box-sizing: border-box;
     display: inline-block;
+  }
+
+  .center-box {
+    height: 300px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    border: solid 1px #dddddd;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+    box-sizing: border-box;
+  }
+
+  #result {
+    height: auto;
+    margin-top: 30px;
+    padding-bottom: 20px;
   }
 
   /* 攻撃側 */
@@ -119,12 +178,12 @@ a {
   .poke-title {
     font-size: 20px;
     padding-bottom: 10px;
-    border-bottom: solid 1px #dddddd;
+    border-bottom: solid 2px #dddddd;
     color: #555555;
     display: flex;
   }
 
-  .kougeki {
+  .form-title {
     margin-left: 10px;
     font-size: 25px;
   }
@@ -140,12 +199,412 @@ a {
     margin-right: 10px;
   }
 
-  /* 防御側 */
-
-  .bougyo {
-    margin-left: 10px;
-    font-size: 25px;
+  .poke-form {
+    color: #555555;
+    padding: 0 10px;
   }
+
+  .form-label {
+    font-size: 11px;
+  }
+
+  .label-left {
+    display: inline-block;
+  }
+
+  .label-right {
+    font-family: serif;
+    text-align: right;
+    display: inline-block;
+    float: right;
+  }
+
+  .poke-name-label {
+    font-size: 13px;
+  }
+
+  .form-main {
+    font-size: 24px;
+    border-bottom: solid 1px #dddddd;
+    text-align: center;
+    clear:both;
+  }
+
+  .form-box {
+    margin: 15px 0 0;
+    cursor: pointer;
+  }
+
+  /* ポケモンモーダル */
+
+  .modal-wrapper {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 100;
+    display: none;
+  }
+
+  .modal {
+    position :absolute;
+    top: 20%;
+    left: 20%;
+    right: 20%;
+    bottom: 20%;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 15px rgba(0,0,0,0.5);
+    padding: 20px 30px 40px;
+    border-radius: 10px;
+    height: auto;
+    overflow: scroll;
+  }
+
+  .search-form {
+    font-size: 20px;
+    width: 100%;
+    padding: 5px;
+    font-family: serif;
+    border: 0;
+    border-bottom: solid 1px #dddddd;
+    box-sizing: border-box;
+  }
+
+  .search-form:focus {
+    outline: none;
+    border-bottom: solid 1px #555555;
+  }
+
+  .btn-close {
+    text-align: right;
+  }
+
+  .fa-times {
+    background-color: rgba(0, 0, 0, 0);
+    padding: 4px 8px;
+    border-radius: 15px;
+    color: #555555;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 1.0s;
+  }
+
+  .fa-times:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  .select-item {
+    font-size: 18px;
+    cursor: pointer;
+    padding: 3px;
+    border-bottom: solid 1px #ffffff;
+  }
+
+  .select-item:hover {
+    border-bottom: solid 1px #dddddd;
+  }
+
+  /* 数字フォーム */
+  .poke-attack-down, .poke-attack-up {
+    cursor: default;
+  }
+
+  .box-left {
+    width: 46%;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .box-right {
+    width: 46%;
+    margin: 0 0 0 4.9%;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .input-number {
+    font-size: 19px;
+    width: 40px;
+    font-family: serif;
+    padding: 0;
+    border: 0;
+    color: #555555;
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+
+  .input-number:focus {
+    outline: none;
+  }
+
+  #individual {
+    width: 23px;
+  }
+
+  .poke-real {
+    cursor: default;
+  }
+
+  .poke-real-main {
+   font-size: 20px;
+   padding: 4px 0 2px;
+  }
+
+  .poke-rank {
+    width: 46%;
+  }
+
+  #item-attack, #item-block {
+    font-size: 18px;
+    padding: 1px 0;
+  }
+
+  #skill {
+    font-size: 18px;
+    padding: 1px 0;
+  }
+
+  #characteristic-attack, #characteristic-block {
+    font-size: 18px;
+    padding: 1px 0;
+  }
+
+  .parent-dropdown {
+    position: relative;
+  }
+
+  .dropdown {
+    width: 100%;
+    height: 100px;
+    background-color: #ffffff;
+    border: solid 1px #3097e6;
+    border-top: 0;
+    z-index: 3;
+    box-sizing: border-box;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.3);
+    position: absolute;
+    overflow: scroll;
+    display: none;
+  }
+
+  .rank-dropdown {
+    height: 150px;
+  }
+
+  .item-dropdown {
+    height: auto;
+  }
+
+  .skill-dropdown {
+    height: 600px;
+    left: 300px;
+    top: -370px;
+    border-top: solid 1px #3097e6;
+  }
+
+  .characteristic-dropdown {
+    height: auto;
+  }
+
+  .format-dropdown {
+    height: auto;
+  }
+
+  .weather-dropdown {
+    height: 141px;
+  }
+
+  .field-dropdown {
+    height: 141px;
+  }
+
+  .dropdown-icon {
+    font-size: 15px;
+    margin: 7px 7px 0 0;
+    float: right;
+  }
+
+  .fa-sort-up {
+    margin-top: 13px;
+  }
+
+  .dropdown-item {
+    font-size: 20px;
+    font-family: serif;
+    text-align: center;
+  }
+
+  .correction-dropdown .dropdown-item {
+    padding: 2px 16px 1px 0px;
+  }
+
+  .rank-dropdown .dropdown-item {
+    padding: 2px 18px 1px 0;
+  }
+
+  .item-dropdown .dropdown-item {
+    font-size: 18px;
+    height: 25px;
+    padding: 2px 20px 1px 0;
+  }
+
+  .skill-dropdown .dropdown-item {
+    font-size: 18px;
+    height: 25px;
+    padding: 2px 20px 1px 0;
+  }
+
+  .characteristic-dropdown .dropdown-item {
+    font-size: 18px;
+    height: 25px;
+    padding: 2px 20px 1px 0;
+  }
+
+  .weather-dropdown .dropdown-item {
+    font-size: 18px;
+    height: 25px;
+    padding: 2px 20px 1px 0;
+  }
+
+  .field-dropdown .dropdown-item {
+    font-size: 18px;
+    height: 25px;
+    padding: 2px 20px 1px 0;
+  }
+
+  .dropdown-item:hover {
+    background-color: rgba(48, 151, 230, 0.15);
+  }
+
+  .skill-parameter {
+    color: #555555;
+  }
+
+  /* condition */
+  .condition-left {
+    width: 48%;
+    display: inline-block;
+  }
+
+  .condition-right {
+    width: 48%;
+    display: inline-block;
+  }
+
+  .btn-change-box {
+    padding: 3px 10px;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-left: 7px;
+    border-radius: 30px;
+    position: absolute;
+    cursor: pointer;
+  }
+
+  .btn-change-box:hover {
+    background-color: #dddddd;
+    border: solid 2px #eeeeee;
+  }
+
+  .btn-change-box:active {
+    background-color: #eeeeee;
+  }
+
+  .btn-box {
+    display: inline-block;
+  }
+
+  /* result */
+  .result-main {
+    font-size: 18px;
+    padding-left: 5px;
+    text-align: left;
+  }
+
+  .damage-left {
+    width: 48%;
+
+    color: #666666;
+    display: inline-block;
+  }
+
+  .damage-right {
+    width: 48%;
+    color: #666666;
+    display: inline-block;
+  }
+
+  .result-damage span{
+    color: #555555;
+  }
+
+
+  .graph {
+    height: 10px;
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 10px;
+    background-color: #cccccc;
+    position: relative;
+  }
+
+  .graph-confirm {
+    height: 10px;
+    width: 100%;
+    border-radius: 30px;
+    background-color: #999999;
+    position: absolute;
+    z-index: 1;
+  }
+
+  .graph-random {
+    height: 10px;
+    width: 100%;
+    border-radius: 30px;
+    background-color: #666666;
+    position: absolute;
+    z-index: 2;
+  }
+
+  .detail-icon .dropdown-icon{
+    margin: 0 2px 0;
+  }
+
+  .detail-main {
+    font-size: 13px;
+    padding: 6px 3px 0;
+    display: none;
+  }
+
+  .detail-item {
+    padding: 4px 0;
+    width: 31px;
+    text-align: center;
+    border: solid 1px #555555;
+    border-left: 0;
+    display: inline-block;
+  }
+
+  .detail-left {
+    border-left: solid 1px #555555;
+    display: inline-block;
+  }
+
+  .detail-right {
+    border-left: solid 1px #555555;
+    display: inline-block;
+    margin-left: 0;
+  }
+
+  .detail-icon {
+    font-size: 12px;
+  }
+
+
+
+
 
 
 }
