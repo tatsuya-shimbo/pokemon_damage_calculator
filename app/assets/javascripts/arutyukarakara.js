@@ -283,6 +283,7 @@ $(function() {
       $(this).find(".swich").addClass("swich-off");
     }
     skillParameter();
+    damageCalculate();
   });
 
   // 技　発動条件
@@ -1158,11 +1159,12 @@ $(function() {
         }, 400);
       }
       skillParameter();
+      damageCalculate();
     }
   });
 
   // わざパラメーター表示
-  function skillParameter(){
+  function skillParameter(no){
     var select = $("#skill").children(" option:selected");
     var skill = $("#skill").val()*1;
     var attackChara = $("#characteristic-attack").val()*1;
@@ -1255,7 +1257,10 @@ $(function() {
         $(".skill-parameter").append(' - <span class="power">' + maxPower + '</span>');
         $(".skill-parameter").css("color", "#333333");
       }
-      typeCompatibility(category);
+      if (no == 1) {
+        typeCompatibility(category);
+      }
+
       if (group == 1){
         if (skill == 298) {
           var baseAttack = $(".convey-attack-b").text()*1;
@@ -1392,10 +1397,12 @@ $(function() {
 
   $("#individual, #effort-attack, #effort-block, #skill-power").on("change", function(){
     skillParameter();
+    damageCalculate();
   });
 
   $("#effort-hp").on("change", function(){
     skillParameter();
+    damageCalculate();
   });
 
 
@@ -2336,16 +2343,21 @@ $(function() {
       setTimeout(damageCalculate,200);
     } else if (dropdown.hasClass("characteristic-dropdown")) {
       charaSwich();
-      skillParameter();
+      var no = 1;
+      skillParameter(no);
     } else if (dropdown.hasClass("skill-dropdown")) {
       skillSwich();
-      skillParameter();
+      var no = 1;
+      skillParameter(no);
     } else if (dropdown.hasClass("format-dropdown")) {
       skillSwich();
       skillParameter();
+      damageCalculate();
     }
     else {
       skillParameter();
+
+      damageCalculate();
 
 
     }
