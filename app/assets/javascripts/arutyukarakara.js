@@ -667,63 +667,23 @@ $(function() {
     var id1 = 19 * attackCategory + blockCategory1;
     var id2 = 19 * attackCategory + blockCategory2;
     var attackChara = $("#characteristic-attack").val()*1;
+    var compatibilityArray = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0, 2, 2, 1, 2, 2, 2, 1, 1, 2, 4, 4, 2, 2, 2, 2, 2, 4, 1, 2, 1, 2, 4, 2, 2, 2, 4, 1, 2, 1, 2, 2, 2, 4, 2, 2, 2, 4, 2, 1, 2, 2, 2, 2, 2, 2, 4, 1, 1, 2, 2, 2, 0, 4, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1, 4, 2, 1, 2, 2, 1, 4, 1, 2, 1, 4, 2, 1, 2, 1, 2, 2, 2, 1, 1, 2, 4, 1, 2, 2, 4, 4, 2, 2, 2, 2, 4, 2, 1, 2, 2, 4, 2, 2, 2, 2, 4, 2, 1, 2, 1, 1, 1, 4, 0, 2, 4, 4, 1, 2, 2, 2, 2, 2, 4, 2, 2, 1, 1, 2, 2, 2, 1, 1, 2, 2, 0, 4, 2, 2, 4, 2, 4, 1, 2, 2, 4, 2, 0, 2, 1, 4, 2, 2, 2, 4, 2, 2, 2, 2, 2, 1, 4, 2, 4, 2, 2, 2, 2, 4, 1, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 2, 2, 1, 2, 2, 2, 2, 0, 1, 2, 2, 2, 1, 2, 2, 4, 2, 1, 1, 2, 1, 4, 2, 2, 1, 2, 4, 1, 1, 2, 2, 4, 2, 2, 2, 4, 1, 2, 1, 4, 2, 4, 2, 2, 2, 2, 1, 2, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2, 2, 4, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2, 1, 0, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 4, 2, 2, 4, 2, 1, 2, 1, 2, 2, 1, 1, 1, 2, 4, 2, 2, 2, 2, 2, 2, 4, 2, 2, 2, 1, 4, 2, 2, 1, 2, 2, 2, 2, 4, 1, 2, 2, 2, 2, 2, 2, 4, 1, 2]
+
     $(".convey-compatibility").empty();
     // きもったま
     if (attackChara == 50 && (id1 == 33 || id1 == 147 || id2 == 33 || id2 == 147)){
       if (id1 == 33 || id1 == 147) {
-        $(".convey-compatibility").append("1");
-
-        $.ajax({
-          type: 'GET',
-          url: '/',
-          data: { id2: id2 },
-          dataType: 'json'
-        })
-        .done(function(data){
-          data.forEach(function(com){
-            $(".convey-compatibility").append(com.value);
-          });
-          damageCalculate();
-        })
-        .fail(function(){
-          alert("通信に失敗しました");
-        })
+        $(".convey-compatibility").append("2");
+        $(".convey-compatibility").append(compatibilityArray[id2]);
       } else if (id2 == 33 || id2 == 147) {
-        $(".convey-compatibility").append("1");
-
-        $.ajax({
-          type: 'GET',
-          url: '/',
-          data: { id1: id1 },
-          dataType: 'json'
-        })
-        .done(function(data){
-          data.forEach(function(com){
-            $(".convey-compatibility").append(com.value);
-          });
-          damageCalculate();
-        })
-        .fail(function(){
-          alert("通信に失敗しました");
-        })
+        $(".convey-compatibility").append(compatibility[id1])
+        $(".convey-compatibility").append("2");
       }
     } else {
-      $.ajax({
-        type: 'GET',
-        url: '/',
-        data: { id1: id1, id2: id2 },
-        dataType: 'json'
-      })
-      .done(function(data){
-        data.forEach(function(com){
-          $(".convey-compatibility").append(com.value);
-        });
-        damageCalculate();
-      })
-      .fail(function(){
-        alert("通信に失敗しました");
-      })
+      $(".convey-compatibility").append(compatibilityArray[id1]);
+      $(".convey-compatibility").append(compatibilityArray[id2]);
     }
+    setTimeout(damageCalculate, 50);
   }
 
   // ログインモーダル
