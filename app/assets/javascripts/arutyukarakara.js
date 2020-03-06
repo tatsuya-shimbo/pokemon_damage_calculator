@@ -283,7 +283,6 @@ $(function() {
       $(this).find(".swich").addClass("swich-off");
     }
     skillParameter();
-    setTimeout(damageCalculate,180);
   });
 
   // 技　発動条件
@@ -683,11 +682,12 @@ $(function() {
           data.forEach(function(com){
             $(".convey-compatibility").append(com.value);
           });
+          damageCalculate();
         })
         .fail(function(){
           alert("通信に失敗しました");
         })
-      } else if (id2 == 33 || id == 147) {
+      } else if (id2 == 33 || id2 == 147) {
         $(".convey-compatibility").append("1");
 
         $.ajax({
@@ -700,6 +700,7 @@ $(function() {
           data.forEach(function(com){
             $(".convey-compatibility").append(com.value);
           });
+          damageCalculate();
         })
         .fail(function(){
           alert("通信に失敗しました");
@@ -716,6 +717,7 @@ $(function() {
         data.forEach(function(com){
           $(".convey-compatibility").append(com.value);
         });
+        damageCalculate();
       })
       .fail(function(){
         alert("通信に失敗しました");
@@ -1156,7 +1158,6 @@ $(function() {
         }, 400);
       }
       skillParameter();
-      setTimeout(damageCalculate,200);
     }
   });
 
@@ -1391,12 +1392,10 @@ $(function() {
 
   $("#individual, #effort-attack, #effort-block, #skill-power").on("change", function(){
     skillParameter();
-    setTimeout(damageCalculate,170);
   });
 
   $("#effort-hp").on("change", function(){
     skillParameter();
-    setTimeout(damageCalculate,170);
   });
 
 
@@ -2338,20 +2337,17 @@ $(function() {
     } else if (dropdown.hasClass("characteristic-dropdown")) {
       charaSwich();
       skillParameter();
-      setTimeout(damageCalculate,200);
     } else if (dropdown.hasClass("skill-dropdown")) {
       skillSwich();
       skillParameter();
-      setTimeout(damageCalculate,200);
     } else if (dropdown.hasClass("format-dropdown")) {
       skillSwich();
       skillParameter();
-      setTimeout(damageCalculate,200);
     }
     else {
       skillParameter();
 
-      setTimeout(damageCalculate,200);
+
     }
   });
 
