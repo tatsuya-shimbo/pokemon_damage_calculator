@@ -1,0 +1,200 @@
+<div class="new-container">
+  <div class="mine-wrapper">
+    <div class="new-title">
+      ポケモンの登録
+    </div>
+    <div class="mine-form">
+      <%= form_with(model: @mine, local: true, id: "mine-form") do |f| %>
+      <div class="login-box mine-pokemon">
+        <div class="login-label">ポケモン</div>
+        <div class="login-main">
+          <div class="pokemon-value"></div>
+          <%= f.text_field :pokemon, class: "pokemon-id-form" %>
+          <div class="convey convey-mine-pokemon">
+            <% unless @pokemon_new == nil %>
+              <%= @pokemon_new.name %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="modal">
+        <div class="btn-close"><i class="fas fa-times"></i></div>
+        <div class="modal-form">
+          <input type="text" name="serch" class="search-form">
+        </div>
+        <ul class="modal-select">
+        </ul>
+      </div>
+      <div class="btn-close modal-btn-close mine-modal-close">
+
+      </div>
+      <div class="login-box mine-name">
+        <div class="login-label">ニックネーム(20文字)</div>
+        <div class="login-main">
+          <%= f.text_field :name, class: "input-login" %>
+        </div>
+      </div>
+      <div class="mine-parameter">
+        <div class="parameter-title parameter-box">
+          <div class="parameter-label">
+
+          </div>
+          <div class="parameter-base not">
+            種族値
+          </div>
+          <div class="parameter-effort not">
+            努力値
+          </div>
+          <div class="parameter-real not">
+            実数値
+          </div>
+        </div>
+        <div class="mine-hp parameter-box">
+          <div class="parameter-label">
+            HP
+          </div>
+          <div class="parameter-base">
+
+          </div>
+          <div class="parameter-effort">
+            <%= f.number_field :hit_point, class: "effort-form" %>
+          </div>
+          <div class="parameter-real">
+
+          </div>
+        </div>
+        <div class="mine-attack parameter-box">
+          <div class="parameter-label">
+            攻撃
+          </div>
+          <div class="parameter-base">
+
+          </div>
+          <div class="parameter-effort">
+            <%= f.number_field :attack, class: "effort-form" %>
+          </div>
+          <div class="parameter-real">
+
+          </div>
+        </div>
+        <div class="mine-block parameter-box">
+          <div class="parameter-label">
+            防御
+          </div>
+          <div class="parameter-base">
+
+          </div>
+          <div class="parameter-effort">
+            <%= f.number_field :block, class: "effort-form" %>
+          </div>
+          <div class="parameter-real">
+
+          </div>
+        </div>
+        <div class="mine-contact parameter-box">
+          <div class="parameter-label">
+            特攻
+          </div>
+          <div class="parameter-base">
+
+          </div>
+          <div class="parameter-effort">
+            <%= f.number_field :contact, class: "effort-form" %>
+          </div>
+          <div class="parameter-real">
+
+          </div>
+        </div>
+        <div class="mine-defense parameter-box">
+          <div class="parameter-label">
+            特防
+          </div>
+          <div class="parameter-base">
+
+          </div>
+          <div class="parameter-effort">
+            <%= f.number_field :defense, class: "effort-form" %>
+          </div>
+          <div class="parameter-real">
+
+          </div>
+        </div>
+        <div class="mine-speed parameter-box">
+          <div class="parameter-label">
+            素早さ
+          </div>
+          <div class="parameter-base">
+
+          </div>
+          <div class="parameter-effort">
+            <%= f.number_field :speed, class: "effort-form" %>
+          </div>
+          <div class="parameter-real">
+
+          </div>
+        </div>
+      </div>
+      <div class="login-box mine-nature">
+        <div class="login-label">性格</div>
+        <div class="login-main">
+          <div class="nature-value"></div>
+          <%= f.number_field :nature, class: "nature-id-form" %>
+          <div class="nature-correction">
+            1
+          </div>
+        </div>
+      </div>
+      <div class="modal">
+        <div class="btn-close"><i class="fas fa-times"></i></div>
+        <div class="nature-tab">
+          <div class="tab-l">
+            <div class="tab-i">がんばりや</div>
+            <div class="tab-i">さみしがり</div>
+            <div class="tab-i">いじっぱり</div>
+            <div class="tab-i">やんちゃ</div>
+            <div class="tab-i">ゆうかん</div>
+          </div>
+          <div class="tab-l">
+            <div class="tab-i">ずぶとい</div>
+            <div class="tab-i">きまぐれ</div>
+            <div class="tab-i">わんぱく</div>
+            <div class="tab-i">のうてんき</div>
+            <div class="tab-i">のんき</div>
+          </div>
+          <div class="tab-l">
+            <div class="tab-i">ひかえめ</div>
+            <div class="tab-i">おっとり</div>
+            <div class="tab-i">すなお</div>
+            <div class="tab-i">うっかりや</div>
+            <div class="tab-i">れいせい</div>
+          </div>
+          <div class="tab-l">
+            <div class="tab-i">おだやか</div>
+            <div class="tab-i">おとなしい</div>
+            <div class="tab-i">しんちょう</div>
+            <div class="tab-i">てれや</div>
+            <div class="tab-i">なまいき</div>
+          </div>
+          <div class="tab-l">
+            <div class="tab-i">おくびょう</div>
+            <div class="tab-i">せっかち</div>
+            <div class="tab-i">ようき</div>
+            <div class="tab-i">むじゃき</div>
+            <div class="tab-i">まじめ</div>
+          </div>
+        </div>
+      </div>
+      <div class="btn-close modal-btn-close mine-modal-close">
+
+      </div>
+      <div class="mine-submit">
+        <div class="user-btn">
+          登録
+        </div>
+      </div>
+      <%= f.number_field :item, class: "mine-form-hide" %>
+      <%= f.number_field :characteristic, class: "mine-form-hide" %>
+      <% end %>
+    </div>
+  </div>
+</div>

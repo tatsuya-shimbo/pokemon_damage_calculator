@@ -1,0 +1,35 @@
+<div class="new-container">
+  <div class="new-wrapper">
+    <div class="new-title">アカウント登録</div>
+    <div class="new-explain">
+      アカウントを作ることによって、<br>
+      自分の育成したポケモンを<br>
+      登録、呼び出しすることができます。<br>
+      1アカウントにつき100匹までです。<br>
+      アカウントは簡単な名前(10文字以内)と<br>
+      パスワードのみで作成できます。
+    </div>
+    <div class="new-form">
+      <div class="login-box">
+        <div class="login-label">名前</div>
+        <div class="login-main">
+          <%= form_with(model: @user, local: true, id: "user-form") do |f| %>
+            <%= f.text_field :name, class: "input-login login-first" %>
+        </div>
+      </div>
+      <div class="login-box">
+        <div class="login-label">パスワード</div>
+        <div class="login-main">
+          <%= f.password_field :password, class: "input-login" %>
+          <% end %>
+        </div>
+      </div>
+      <div class="login-box submit-box">
+        <div class="user-btn">
+          登録
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

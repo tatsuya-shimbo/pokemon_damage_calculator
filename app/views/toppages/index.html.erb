@@ -1,44 +1,103 @@
 <div class="wrapper">
-  <div id=" left-poke" class="poke">
+  <div id="left-poke" class="poke modal-box">
+    <div class="modal-close">
+
+    </div>
     <div class="poke-title">
       <div class="kougeki form-title">攻撃</div>
-      <div class="poke-btns">
-        <div class="btn btn-pre">保存</div>
-        <div class="btn btn-use">呼出</div>
-      </div>
+      <% if login? %>
+        <div class="poke-btns">
+          <%= link_to "登録", attack_new_mines_path, data: {"turbolinks" => false}, class: "btn btn-pre" %>
+          <div class="btn btn-use">呼出</div>
+          <div class="mine-modal">
+            <div class="btn-close mine-close"><i class="fas fa-times"></i></div>
+            <div class="mine-search-form">
+              <input type="text" name="mine-search" class="mine-search">
+            </div>
+            <ul class="mine-select">
+            </ul>
+          </div>
+          <div class="mine-close-btn mine-close">
+
+          </div>
+          <%= form_with(url: attack_mine_sessions_path, scope: :session, local: true, id: "attack-mine-id") do |f| %>
+            <%= f.text_field :attack_mine_id, class: "mine-id-form" %>
+          <% end %>
+        </div>
+      <% end %>
     </div>
     <div class="poke-form">
+      <% if !!@mine_attack %>
+      <div class="form-box poke-nickname">
+        <div class="form-label">ニックネーム</div>
+        <div class="form-main">
+          <%= @mine_attack.name %>
+        </div>
+      </div>
+      <% end %>
       <div class="poke-name form-box">
         <div class="poke-name-label form-label">
           <div class="label-left">ポケモン</div>
           <div class="label-right">
-            <%= attack_pokemon.hit_point %>-<span class="group-color-a"><%= attack_pokemon.attack %></span>-<%= attack_pokemon.block %>-<span class="group-color-c"><%= attack_pokemon.contact %></span>-<%= attack_pokemon.defense %>-<%= attack_pokemon.speed %>
+            <% if attack_pokemon? %>
+              <%= attack_pokemon.hit_point %>-<span class="group-color-a"><%= attack_pokemon.attack %></span>-<span class="group-color-b"><%= attack_pokemon.block %></span>-<span class="group-color-c"><%= attack_pokemon.contact %></span>-<%= attack_pokemon.defense %>-<%= attack_pokemon.speed %>
+            <% end %>
           </div>
         </div>
         <% if attack_pokemon? %>
           <div class="poke-name-main form-main"><%= attack_pokemon.name %></div>
+          <div class="convey convey-attack-poke"><%= attack_pokemon.id %></div>
           <div class="convey convey-attack-a"><%= attack_pokemon.attack %></div>
+          <div class="convey convey-attack-b"><%= attack_pokemon.block %></div>
           <div class="convey convey-attack-c"><%= attack_pokemon.contact %></div>
           <div class="convey convey-attack-category1"><%= attack_pokemon.category_1 %></div>
           <div class="convey convey-attack-category2"><%= attack_pokemon.category_2 %></div>
           <div class="convey convey-compatibility"></div>
+          <div class="convey convey-dynamax convey-attack-dynamax">0</div>
         <% else %>
           <div class="poke-name-main form-main">-</div>
         <% end %>
       </div>
-      <div class="modal-wrapper">
-        <div class="modal">
-          <div class="btn-close"><i class="fas fa-times"></i></div>
-          <div class="modal-form">
-            <%= form_with(url: attack_poke_sessions_path, scope: :session, local: true, id: "form-attack") do |f| %>
-              <%= f.text_field :attack_name, class: "search-form" %>
-            <% end %>
-          </div>
-          <ul class="modal-select">
-          </ul>
+      <div class="modal">
+        <div class="btn-close"><i class="fas fa-times"></i></div>
+        <div class="modal-form">
+          <%= form_with(url: attack_poke_sessions_path, scope: :session, local: true, id: "form-attack") do |f| %>
+            <%= f.text_field :attack_name, class: "search-form" %>
+          <% end %>
         </div>
+        <ul class="modal-select">
+        </ul>
+      </div>
+      <div class="btn-close modal-btn-close">
+
       </div>
       <div class="poke-attack-up form-box">
+        <% if !!@mine_attack %>
+          <div class="convey convey-attack-mine">
+            1
+          </div>
+          <div class="convey convey-mine-attack">
+            <%= @mine_attack.attack %>
+          </div>
+          <div class="convey convey-mine-block-a">
+            <%= @mine_attack.block %>
+          </div>
+          <div class="convey convey-mine-contact">
+            <%= @mine_attack.contact %>
+          </div>
+          <div class="convey convey-attack-nature">
+            <% if !!@nature_attack %>
+              <%= @nature_attack.value %>
+            <% end %>
+          </div>
+          <div class="number-barrier">
+
+          </div>
+        <% else %>
+          <div class="convey convey-attack-mine">
+            0
+          </div>
+        <% end %>
         <div class="poke-effort box-left">
            <div class="poke-effort-label form-label">努力値 (<span class="attack-group group-color">攻撃</span>)</div>
           <div class="poke-effort-main form-main">
@@ -128,10 +187,12 @@
         <div class="poke-skill-main form-main">
           <select class="input-select" id="skill" name="skill">
             <option value="0" data-category="0" data-group="0" data-power="0" selected hidden></option>
+            <% if attack_pokemon? %>
             <% skills = attack_pokemon.able.order(:id) %>
             <% skills.each do |skill| %>
               <option value="<%= skill.id %>" data-category="<%= skill.category %>" data-group="<%= skill.group
                 %>" data-power="<%= skill.power%>" hidden><%= skill.name %></option>
+            <% end %>
             <% end %>
           </select>
           <i class="fas fa-sort-down dropdown-icon"></i>
@@ -140,14 +201,63 @@
 
         </div>
       </div>
+      <div class="skill-on form-box">
+        <div class="swich-box">
+          <div class="swich swich-off">
+            <div class="attack-skill-explain"></div>
+            <div class="convey convey-attack-skill">0</div>
+          </div>
+        </div>
+      </div>
+      <div class="skill-double form-box">
+        <div class="swich-box">
+          <div class="swich swich-off">
+            <div class="skill-double-explain">対象が複数</div>
+            <div class="convey convey-skill-double">0</div>
+          </div>　
+        </div>
+      </div>
+      <div class="skill-power form-box">
+        <div class="form-label">威力</div>
+        <div class="form-main">
+          <input type="text" name="skill-power" value=0 class="input-number" id="skill-power">
+        </div>
+      </div>
+      <div class="skill-times form-box parent-dropdown">
+        <div class="form-label">回数</div>
+        <div class="form-main">
+          <select class="input-select" id="skill-times" name="skill-times">
+
+          </select>
+          <i class="fas fa-sort-down dropdown-icon"></i>
+        </div>
+        <div class="skill-times-dropdown dropdown">
+
+        </div>
+      </div>
+      <div class="skill-detail form-box parent-dropdown">
+        <div class="form-label">タイプ</div>
+        <div class="form-main">
+          <select class="input-select" id="skill-detail" name="skill-detail">
+            <option value="4" hidden selected>でんき</option>
+            <option value="16" hidden>あく</option>
+          </select>
+          <i class="fas fa-sort-down dropdown-icon"></i>
+        </div>
+        <div class="skill-detail-dropdown dropdown">
+
+        </div>
+      </div>
       <div class="poke-characteristic form-box parent-dropdown">
         <div class="poke-characteristic-label form-label">特性</div>
         <div class="poke-characteristic-main form-main">
-          <select class="input-select" id="characteristic-attack" name="chracteristic-attack">
+          <select class="input-select" id="characteristic-attack" name="characteristic-attack">
             <option value="0" hidden></option>
-            <% characteristics = attack_pokemon.have %>
+            <% if attack_pokemon? %>
+            <% characteristics = attack_pokemon.have.order(:id) %>
             <% characteristics.each do |chara| %>
               <option value="<%= chara.id %>" hidden><%= chara.name %></option>
+            <% end %>
             <% end %>
           </select>
           <i class="fas fa-sort-down dropdown-icon"></i>
@@ -156,10 +266,36 @@
 
         </div>
       </div>
+      <div class="chara-on attack-on form-box">
+        <div class="swich-box">
+          <div class="swich swich-off">
+            <div class="attack-chara-explain"></div>
+            <div class="convey convey-attack-chara">0</div>
+          </div>
+        </div>
+      </div>
+      <div class="chara-detail form-box parent-dropdown">
+        <div class="form-label">性別</div>
+        <div class="form-main">
+          <select class="input-select" id="chara-detail" name="chara-detail">
+            <option value="0" hidden></option>
+            <option value="1" hidden>異性</option>
+            <option value="2" hidden>同性</option>
+            <option value="3" hidden>性別不明</option>
+          </select>
+          <i class="fas fa-sort-down dropdown-icon"></i>
+        </div>
+        <div class="chara-detail-dropdown dropdown">
+
+        </div>
+      </div>
     </div>
   </div>
   <div id="center">
-    <div id="condition" class="center-box">
+    <div id="condition" class="center-box modal-box">
+      <div class="modal-close">
+
+      </div>
       <div class="poke-title">
         <div class="form-title">条件</div>
         <div class="btn-box">
@@ -171,7 +307,50 @@
         </div>
       </div>
       <div class="poke-form">
-        <div class="condition-left">
+        <div class="condition-left condition-side">
+          <div class="form-box">
+            <div class="form-label">攻撃側</div>
+            <div class="form-main">
+              <div class="swich-box">
+                <div class="swich swich-off">
+                  <div id="yakedo">やけど</div>
+                  <div class="convey convey-attack-yakedo">0</div>
+                </div>
+              </div>
+              <div class="swich-box swich-double">
+                <div class="swich swich-off">
+                  <div id="tedasuke">てだすけ</div>
+                  <div class="convey convey-attack-tedasuke">0</div>
+                </div>
+              </div>
+              <div class="swich-box swich-double">
+                <div class="swich swich-off">
+                  <div id="haganenoseisin">はがねのせいしん</div>
+                  <div class="convey convey-attack-haganenoseisin">0</div>
+                </div>
+              </div>
+              <div class="swich-box swich-double">
+                <div class="swich swich-off">
+                  <div id="battery">バッテリー</div>
+                  <div class="convey convey-attack-battery">0</div>
+                </div>
+              </div>
+              <div class="swich-box swich-double">
+                <div class="swich swich-off">
+                  <div id="powerspot">パワースポット</div>
+                  <div class="convey convey-attack-powerspot">0</div>
+                </div>
+              </div>
+              <div class="swich-box swich-double">
+                <div class="swich swich-off">
+                  <div id="flowergift">フラワーギフト</div>
+                  <div class="convey convey-attack-flowergift">0</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="condition-center">
           <div class="format form-box parent-dropdown">
             <div class="format-label form-label">対戦形式</div>
             <div class="format-main form-main ">
@@ -217,10 +396,53 @@
 
             </div>
           </div>
+          <div class="gravity form-box">
+            <div class="form-label">その他</div>
+            <div class="gravity-main">
+              <div class="swich-box">
+                <div class="swich swich-off">
+                  <div id="gravity">じゅうりょく</div>
+                  <div class="convey convey-gravity">0</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="condition-right">
-          <div class="">
-
+        <div class="condition-right condition-side">
+          <div class="form-box">
+            <div class="form-label">防御側</div>
+            <div class="form-main">
+              <div class="swich-box">
+                <div class="swich swich-off">
+                  <div id="rifureku">リフレクター</div>
+                  <div class="convey convey-block-rifureku">0</div>
+                </div>
+              </div>
+              <div class="swich-box">
+                <div class="swich swich-off">
+                  <div id="hikarinokabe">ひかりのかべ</div>
+                  <div class="convey convey-block-hikarinokabe">0</div>
+                </div>
+              </div>
+              <div class="swich-box">
+                <div class="swich swich-off">
+                  <div id="mamoru">まもる</div>
+                  <div class="convey convey-block-mamoru">0</div>
+                </div>
+              </div>
+              <div class="swich-box swich-double">
+                <div class="swich swich-off">
+                  <div id="flowergift">フラワーギフト</div>
+                  <div class="convey convey-block-flowergift">0</div>
+                </div>
+              </div>
+              <div class="swich-box swich-double">
+                <div class="swich swich-off">
+                  <div id="friendgard">フレンドガード</div>
+                  <div class="convey convey-block-friendgard">0</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -236,10 +458,10 @@
             <div class="result-damage ">
               <div class="damage-left">
                 <div class="damage-box">
-                  ダメージ： <span class="damage"></span>
+                  ダメージ： <span class="damage">0 〜 0</span>
                 </div>
                 <div class="percentage-box">
-                  割合： <span class="percentage"></span>
+                  割合： <span class="percentage">0 〜 0％</span>
                 </div>
               </div>
               <div class="damage-right">
@@ -273,10 +495,10 @@
             <div class="result-damage">
               <div class="damage-left">
                 <div class="damage-box">
-                  ダメージ： <span class="damage"></span>
+                  ダメージ： <span class="damage">0 〜 0</span>
                 </div>
                 <div class="percentage-box">
-                  割合： <span class="percentage"></span>
+                  割合： <span class="percentage">0 〜 0％</span>
                 </div>
               </div>
               <div class="damage-right">
@@ -309,46 +531,104 @@
     </div>
 
   </div>
-  <div id="right-poke" class="poke">
+  <div id="right-poke" class="poke modal-box">
+    <div class="modal-close">
+
+    </div>
     <div class="poke-title">
       <div class="bougyo form-title">防御</div>
-      <div class="poke-btns">
-        <div class="btn btn-pre">保存</div>
-        <div class="btn btn-use">呼出</div>
-      </div>
+      <% if login? %>
+        <div class="poke-btns">
+          <%= link_to "登録", block_new_mines_path, data: {"turbolinks" => false}, class: "btn btn-pre" %>
+          <div class="btn btn-use">呼出</div>
+          <div class="mine-modal">
+            <div class="btn-close mine-close"><i class="fas fa-times"></i></div>
+            <div class="mine-search-form">
+              <input type="text" name="mine-search" class="mine-search">
+            </div>
+            <ul class="mine-select">
+            </ul>
+          </div>
+          <div class="mine-close-btn mine-close">
+
+          </div>
+          <%= form_with(url: block_mine_sessions_path, scope: :session, local: true, id: "block-mine-id") do |f| %>
+            <%= f.text_field :block_mine_id, class: "mine-id-form" %>
+          <% end %>
+        </div>
+      <% end %>
     </div>
     <div class="poke-form">
+      <% if !!@mine_block %>
+      <div class="form-box poke-nickname">
+        <div class="form-label">ニックネーム</div>
+        <div class="form-main">
+          <%= @mine_block.name %>
+        </div>
+      </div>
+      <% end %>
       <div class="poke-name form-box">
         <div class="poke-name-label form-label">
           <div class="label-left">ポケモン</div>
           <div class="label-right">
-            <%= block_pokemon.hit_point %>-<%= block_pokemon.attack %>-<span class="group-color-a"><%= block_pokemon.block %></span>-<%= block_pokemon.contact %>-<span class="group-color-c"><%= block_pokemon.defense %></span>-<%= block_pokemon.speed %>
+            <% if block_pokemon? %>
+              <%= block_pokemon.hit_point %>-<%= block_pokemon.attack %>-<span class="group-color-a"><%= block_pokemon.block %></span>-<%= block_pokemon.contact %>-<span class="group-color-c"><%= block_pokemon.defense %></span>-<%= block_pokemon.speed %>
+            <% end %>
           </div>
         </div>
         <% if block_pokemon? %>
           <div class="poke-name-main form-main"><%= block_pokemon.name %></div>
+          <div class="convey convey-block-poke"><%= block_pokemon.id %></div>
           <div class="convey convey-block-h"><%= block_pokemon.hit_point %></div>
           <div class="convey convey-block-b"><%= block_pokemon.block %></div>
           <div class="convey convey-block-d"><%= block_pokemon.defense %></div>
           <div class="convey convey-block-category1"><%= block_pokemon.category_1 %></div>
           <div class="convey convey-block-category2"><%= block_pokemon.category_2 %></div>
+          <div class="convey convey-dynamax convey-block-dynamax">0</div>
         <% else %>
           <div class="poke-name-main form-main">-</div>
         <% end %>
       </div>
-      <div class="modal-wrapper">
-        <div class="modal">
-          <div class="btn-close"><i class="fas fa-times"></i></div>
-          <div class="modal-form">
-            <%= form_with(url: block_poke_sessions_path, scope: :session, local: true, id: "form-block") do |f| %>
-              <%= f.text_field :block_name, class: "search-form" %>
-            <% end %>
-          </div>
-          <ul class="modal-select">
-          </ul>
+      <div class="modal">
+        <div class="btn-close"><i class="fas fa-times"></i></div>
+        <div class="modal-form">
+          <%= form_with(url: block_poke_sessions_path, scope: :session, local: true, id: "form-block") do |f| %>
+            <%= f.text_field :block_name, class: "search-form" %>
+          <% end %>
         </div>
+        <ul class="modal-select">
+        </ul>
+      </div>
+      <div class="btn-close modal-btn-close">
+
       </div>
       <div class="form-box">
+        <% if !!@mine_block %>
+          <div class="convey convey-block-mine">
+            1
+          </div>
+          <div class="convey convey-mine-hp">
+            <%= @mine_block.hit_point %>
+          </div>
+          <div class="convey convey-mine-block-b">
+            <%= @mine_block.block %>
+          </div>
+          <div class="convey convey-mine-defense">
+            <%= @mine_block.defense %>
+          </div>
+          <div class="convey convey-block-nature">
+            <% if !!@nature_block %>
+              <%= @nature_block.value %>
+            <% end %>
+          </div>
+          <div class="number-barrier">
+
+          </div>
+        <% else %>
+          <div class="convey convey-block-mine">
+            0
+          </div>
+        <% end %>
         <div class="poke-effort box-left">
           <div class="poke-effort-label form-label">努力値 (HP)</div>
           <div class="poke-effort-main form-main">
@@ -369,7 +649,23 @@
              <input type="text" name="effort-block" value=252 class="input-number" id="effort-block">
            </div>
         </div>
-        <div class="poke-rank box-right parent-dropdown">
+        <div class="poke-correction box-right parent-dropdown">
+          <div class="poke-correction-label form-label">性格補正 (<span class="block-group group-color">防御</span>)</div>
+          <div class="poke-correction-main form-main">
+            <select name="correction-block" class="input-select" id="correction-block">
+              <option value="1.1" hidden>×1.1</option>
+              <option value="1" selected hidden>×1.0</option>
+              <option value="0.9" hidden>×0.9</option>
+            </select>
+            <i class="fas fa-sort-down dropdown-icon"></i>
+          </div>
+          <div class="correction-dropdown dropdown">
+
+          </div>
+        </div>
+      </div>
+      <div class="poke-block-down form-box">
+        <div class="poke-rank box-left parent-dropdown">
           <div class="poke-rank-label form-label"><span class="block-group group-color">防御</span>ランク</div>
           <div class="poke-rank-main form-main">
             <select class="input-select" name="rank-block" id="rank-block">
@@ -393,22 +689,6 @@
 
           </div>
         </div>
-      </div>
-      <div class="poke-block-down form-box">
-        <div class="poke-correction box-left parent-dropdown">
-          <div class="poke-correction-label form-label">性格補正 (<span class="block-group group-color">防御</span>)</div>
-          <div class="poke-correction-main form-main">
-            <select name="correction-block" class="input-select" id="correction-block">
-              <option value="1.1" hidden>×1.1</option>
-              <option value="1" selected hidden>×1.0</option>
-              <option value="0.9" hidden>×0.9</option>
-            </select>
-            <i class="fas fa-sort-down dropdown-icon"></i>
-          </div>
-          <div class="correction-dropdown dropdown">
-
-          </div>
-        </div>
         <div class="poke-real box-right">
           <div class="poke-real-label form-label">
             実数値 (<span class="block-group group-color">防御</span>)
@@ -420,14 +700,14 @@
         <div class="poke-item-label form-label">持ち物</div>
         <div class="poke-item-main form-main">
           <select class="input-select" name="item-block" id="item-block">
-            <option value="0" data-value="1" selected hidden></option>
-            <option value="1" data-value="1.5" hidden>しんかのきせき</option>
-            <option value="2" data-value="1.5" hidden>とつげきチョッキ</option>
-            <option value="3" data-value="2.0" hidden>半減きのみ</option>
+            <option value="0" data-value="4096" selected hidden></option>
+            <option value="1" data-value="6144" hidden>しんかのきせき</option>
+            <option value="2" data-value="6144" hidden>とつげきチョッキ</option>
+            <option value="3" data-value="2048" hidden>半減きのみ</option>
           </select>
           <i class="fas fa-sort-down dropdown-icon"></i>
         </div>
-        <div class="item-dropdown dropdown">
+        <div class="item-dropdown dropdown block-item-dropdown">
 
         </div>
       </div>
@@ -436,15 +716,25 @@
         <div class="poke-characteristic-main form-main">
           <select class="input-select" id="characteristic-block" name="chracteristic-block">
             <option value="0" hidden></option>
-            <% characteristics = block_pokemon.have %>
+            <% if block_pokemon? %>
+            <% characteristics = block_pokemon.have.order(:id) %>
             <% characteristics.each do |chara| %>
               <option value="<%= chara.id %>" hidden><%= chara.name %></option>
+            <% end %>
             <% end %>
           </select>
           <i class="fas fa-sort-down dropdown-icon"></i>
         </div>
         <div class="characteristic-dropdown dropdown">
 
+        </div>
+      </div>
+      <div class="chara-on block-on form-box">
+        <div class="swich-box">
+          <div class="swich swich-off">
+            <div class="block-chara-explain"></div>
+            <div class="convey convey-block-chara">0</div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,0 +1,12 @@
+<div class="new-container">
+  <div class="mine-wrapper">
+    <div class="new-title">
+      ポケモン一覧
+    </div>
+    <% @mines.each do |mine| %>
+      <div class="mine-view">
+        <%= link_to mine.name, mine_path(mine), data: {"turbolinks" => false} %>
+      </div>
+    <% end %>
+  </div>
+</div>

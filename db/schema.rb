@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_31_064411) do
+ActiveRecord::Schema.define(version: 2020_02_24_150419) do
 
   create_table "characteristics", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -20,6 +20,31 @@ ActiveRecord::Schema.define(version: 2020_01_31_064411) do
 
   create_table "compatibilities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "mines", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.integer "pokemon"
+    t.integer "hit_point"
+    t.integer "attack"
+    t.integer "block"
+    t.integer "contact"
+    t.integer "defense"
+    t.integer "speed"
+    t.string "name"
+    t.integer "nature"
+    t.integer "item"
+    t.integer "characteristic"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_mines_on_user_id"
+  end
+
+  create_table "natures", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.string "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -73,6 +98,7 @@ ActiveRecord::Schema.define(version: 2020_01_31_064411) do
     t.index ["skill_id"], name: "index_wazas_on_skill_id"
   end
 
+  add_foreign_key "mines", "users"
   add_foreign_key "tokuseis", "characteristics"
   add_foreign_key "tokuseis", "pokemons"
   add_foreign_key "wazas", "pokemons"
