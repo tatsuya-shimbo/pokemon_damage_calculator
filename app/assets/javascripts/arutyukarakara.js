@@ -895,7 +895,10 @@ $(function() {
     $(".modal").fadeOut();
     $(".mine-modal-close").fadeOut();
 
-    pokemonBase(text);
+    var modal = $(this).parents(".modal");
+    if (modal.hasClass("pokebase")) {
+      pokemonBase(text);
+    }
   });
 
   // 実数値計算(マイン)
