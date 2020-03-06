@@ -1000,11 +1000,11 @@ $(function() {
       $(".mine-select").empty();
       if (data.length !=0) {
         data.forEach(function(mine){
-          $(".mine-select").append(`<li class="mine-item">${mine.name}<span>${mine.id}</span></li>`);
+          $(".mine-select").append('<li class="mine-item">' + mine.name + '<span>' + mine.id + '</span></li>');
         })
       }
       else {
-        $(".mine-select").append(`<li>検索結果0件</li>`);
+        $(".mine-select").append("<li>検索結果0件</li>");
       }
     })
     .fail(function(){
