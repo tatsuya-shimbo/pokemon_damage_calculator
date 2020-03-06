@@ -834,7 +834,7 @@ $(function() {
       $(".modal-select").empty();
       if (data.length !=0) {
         data.forEach(function(poke){
-          $(".modal-select").append(`<li class="select-item">${poke.name}</li>`);
+          $(".modal-select").append('<li class="select-item">' + poke.name + '</li>');
         })
       }
       else {
