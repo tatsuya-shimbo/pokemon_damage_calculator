@@ -40,7 +40,7 @@
   <div class="nav-modal">
     <%= link_to "ダメージ計算", root_path, data: {"turbolinks" => false}, class: "new-btn" %>
     <% if login? %>
-      <%= link_to "ログアウト", logout_path, class: "logout btn-header" %>
+      <%= link_to "ログアウト", logout_path, method: :delete, class: "logout btn-header" %>
       <%= link_to "ポケモンを登録", new_mine_path, data: {"turbolinks" => false}, class: "new-btn" %>
       <%= link_to "ポケモン一覧", mines_path, data: {"turbolinks" => false}, class: "new-btn" %>
     <% else %>
